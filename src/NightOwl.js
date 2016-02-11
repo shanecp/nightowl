@@ -23,7 +23,7 @@ var NightOwl = (function () {
 		},
 		
 		whenErrorLogFails: function (error) {
-			if (this.isEmpty(error)) {
+			if (NightOwl.isEmpty(error)) {
 				// nothing to log
 			} else {
 				// logging failed
@@ -91,32 +91,34 @@ var NightOwl = (function () {
 					var existingLogs = this.getStoredLogs();
 					var xmlhttp;
 
-					if (window.XMLHttpRequest) {
-						// code for IE7+, Firefox, Chrome, Opera, Safari
-						xmlhttp = new XMLHttpRequest();
-					} else {
-						// code for IE6, IE5
-						xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-					}
-
-					xmlhttp.onreadystatechange = function () {
-						if (xmlhttp.readyState == XMLHttpRequest.DONE) {
-							if (xmlhttp.status == 200) {
-								// success
-								_this.resetLocalLogs();
-							} else if (xmlhttp.status == 400) {
-								// There was an error 400
-							} else {
-								// something else other than 200 was returned
-							}
+					if (existingLogs.length > 0) {
+						if (window.XMLHttpRequest) {
+							// code for IE7+, Firefox, Chrome, Opera, Safari
+							xmlhttp = new XMLHttpRequest();
+						} else {
+							// code for IE6, IE5
+							xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 						}
-					};
 
-					xmlhttp.open('POST', this.serverUrl, true);
-					if (this.apiKey.length) xmlhttp.setRequestHeader('X-Api-Key', this.apiKey);
-					xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-					xmlhttp.setRequestHeader("Accept", "application/json");
-					xmlhttp.send(JSON.stringify({logs: existingLogs}));
+						xmlhttp.onreadystatechange = function () {
+							if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+								if (xmlhttp.status == 200) {
+									// success
+									_this.resetLocalLogs();
+								} else if (xmlhttp.status == 400) {
+									// There was an error 400
+								} else {
+									// something else other than 200 was returned
+								}
+							}
+						};
+
+						xmlhttp.open('POST', this.serverUrl, true);
+						if (this.apiKey.length) xmlhttp.setRequestHeader('X-Api-Key', this.apiKey);
+						xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+						xmlhttp.setRequestHeader("Accept", "application/json");
+						xmlhttp.send(JSON.stringify({logs: existingLogs}));
+					}
 				}
 			} catch (e) {
 				// TODO: hadle post to server failiures
