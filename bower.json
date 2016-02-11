@@ -1,0 +1,28 @@
+{
+  "name": "nightowl",
+  "authors": [
+    "Shane Perera (https://github.com/shanecp)"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/shanecp/nightowl",
+  "description": "JavaScript Offline Exception Monitoring",
+  "main": "init.js",
+  "dependencies": {
+    "stacktrace-js": "^1.0.1"
+  },  
+  "moduleType": [],
+  "keywords": [
+    "angular",
+    "offline",
+    "error",
+    "exception",
+    "stacktracejs"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
